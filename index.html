@@ -440,17 +440,17 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
         <div><div class="s-field-label">Email Address *</div><input class="s-field" id="sEmail" type="email" placeholder="your@gmail.com"></div>
         <div>
           <div class="s-field-label">Language to Install</div>
-          <select class="s-field" id="sLang" style="cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22><path d=%22M0 0l6 8 6-8z%22 fill=%22rgba(200,230,255,0.4)%22/></svg>');background-repeat:no-repeat;background-position:right 14px center;">
-            <option value="en">🇬🇧 English</option>
-            <option value="it">🇮🇹 Italian — Italiano</option>
-            <option value="es">🇪🇸 Spanish — Español</option>
-            <option value="fr">🇫🇷 French — Français</option>
-            <option value="de">🇩🇪 German — Deutsch</option>
-            <option value="pt">🇧🇷 Portuguese — Português</option>
-            <option value="ja">🇯🇵 Japanese — 日本語</option>
-            <option value="zh">🇨🇳 Chinese — 中文</option>
-            <option value="ar">🇸🇦 Arabic — العربية</option>
-            <option value="ko">🇰🇷 Korean — 한국어</option>
+          <select class="s-field" id="sLang" style="cursor:pointer;color:var(--text);background-color:rgba(8,20,50,0.95);">
+            <option value="en"  style="background:#0a1428;color:#e8f4ff;">🇬🇧 English</option>
+            <option value="it"  style="background:#0a1428;color:#e8f4ff;">🇮🇹 Italian — Italiano</option>
+            <option value="es"  style="background:#0a1428;color:#e8f4ff;">🇪🇸 Spanish — Español</option>
+            <option value="fr"  style="background:#0a1428;color:#e8f4ff;">🇫🇷 French — Français</option>
+            <option value="de"  style="background:#0a1428;color:#e8f4ff;">🇩🇪 German — Deutsch</option>
+            <option value="pt"  style="background:#0a1428;color:#e8f4ff;">🇧🇷 Portuguese — Português</option>
+            <option value="ja"  style="background:#0a1428;color:#e8f4ff;">🇯🇵 Japanese — 日本語</option>
+            <option value="zh"  style="background:#0a1428;color:#e8f4ff;">🇨🇳 Chinese — 中文</option>
+            <option value="ar"  style="background:#0a1428;color:#e8f4ff;">🇸🇦 Arabic — العربية</option>
+            <option value="ko"  style="background:#0a1428;color:#e8f4ff;">🇰🇷 Korean — 한국어</option>
           </select>
         </div>
         <div>
@@ -690,7 +690,7 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
   </div>
 
   <!-- AQUAPLAYER -->
-  <div class="win" id="win-player" style="width:420px;height:440px;top:100px;left:200px;">
+  <div class="win" id="win-player" style="width:500px;height:460px;top:100px;left:180px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-player')">
       <span>🎵</span><span class="win-title">AquaPlayer</span>
       <div class="win-controls">
@@ -699,19 +699,38 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
         <button class="win-ctrl close" onclick="closeWin('win-player')">✕</button>
       </div>
     </div>
-    <div class="win-body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;">
-      <div id="playerAlbumArt" style="width:140px;height:140px;border-radius:16px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 0 40px rgba(0,200,255,0.3);transition:transform .3s;">🎵</div>
-      <div style="text-align:center;"><div id="playerTitle" style="font-size:16px;font-weight:500;">AquaSpace Vibes</div><div id="playerArtist" style="font-size:12px;color:var(--text-dim);margin-top:4px;">AquaSpace Music</div></div>
-      <div style="width:100%;display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);"><span id="playerCurrent">0:00</span><span id="playerTotal">3:32</span></div>
-        <div id="playerBar" style="width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;cursor:pointer;" onclick="playerSeek(event)"><div id="playerFill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;transition:width .5s;"></div></div>
+    <div class="win-body" style="display:flex;height:100%;overflow:hidden;">
+      <!-- Playlist sidebar -->
+      <div style="width:180px;flex-shrink:0;background:rgba(0,0,0,0.25);border-right:1px solid var(--glass-border);overflow-y:auto;padding:8px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);padding:6px 8px 8px;">Playlist</div>
+        <div id="playerPlaylist"></div>
       </div>
-      <div style="display:flex;align-items:center;gap:20px;">
-        <button onclick="playerPrev()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;">⏮</button>
-        <button id="playerPlayBtn" onclick="playerToggle()" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;color:white;font-size:22px;cursor:pointer;box-shadow:0 0 20px rgba(0,200,255,0.4);">▶</button>
-        <button onclick="playerNext()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;">⏭</button>
+      <!-- Player main -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;">
+        <div id="playerAlbumArt" style="width:120px;height:120px;border-radius:14px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:48px;box-shadow:0 0 30px rgba(0,200,255,0.3);transition:transform .4s ease;">🎵</div>
+        <div style="text-align:center;width:100%;">
+          <div id="playerTitle" style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">AquaSpace Vibes</div>
+          <div id="playerArtist" style="font-size:12px;color:var(--text-dim);margin-top:3px;">AquaSpace Music</div>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);">
+            <span id="playerCurrent">0:00</span><span id="playerTotal">3:32</span>
+          </div>
+          <div id="playerBar" style="width:100%;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;cursor:pointer;" onclick="playerSeek(event)">
+            <div id="playerFill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:3px;transition:width .8s linear;"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;">
+          <button onclick="playerPrev()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:20px;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">⏮</button>
+          <button id="playerPlayBtn" onclick="playerToggle()" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;color:white;font-size:22px;cursor:pointer;box-shadow:0 0 20px rgba(0,200,255,0.35);transition:transform .1s;">▶</button>
+          <button onclick="playerNext()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:20px;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">⏭</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <span style="font-size:14px;">🔊</span>
+          <input type="range" min="0" max="100" value="70" id="playerVolSlider" style="flex:1;accent-color:var(--accent);" oninput="playerVolumeChange(this.value)">
+          <span id="playerVolPct" style="font-size:11px;color:var(--text-dim);width:28px;">70%</span>
+        </div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;width:100%;"><span style="font-size:14px;">🔊</span><input type="range" min="0" max="100" value="70" style="flex:1;accent-color:var(--accent);"></div>
     </div>
   </div>
 
@@ -937,52 +956,27 @@ let systemOff   = false;
 let lockSoundPlayed = false;
 
 // Unlock audio context on user gesture, play startup chime automatically after
-let _audioCtx = null;
+// ── STARTUP SOUND ──────────────────────────────────────────
+// The real Windows 10 fanmade startup sound (archive.org)
+// Fetched as blob during the Launch button click (user gesture)
+// so it can play automatically when the lock screen appears.
+let _soundBlobUrl = null;
 
 function prefetchSound(){
-  // Create and immediately resume AudioContext during user gesture to unlock it
-  try {
-    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    _audioCtx.resume();
-  } catch(e){}
+  // Called during sLaunchOS() which is a button onclick = user gesture
+  const url = 'https://archive.org/download/Windows10StartupSoundTune/Windows%2010%20Startup%20Sound_Tune.mp3';
+  fetch(url)
+    .then(r => r.blob())
+    .then(b => { _soundBlobUrl = URL.createObjectURL(b); })
+    .catch(() => { _soundBlobUrl = null; });
 }
 
 function playStartupSound(){
-  // Recreate Windows 10 startup sound using Web Audio API
-  // Accurate recreation: soft ascending chime with harmonics and reverb-like tail
-  try {
-    if(!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const ctx = _audioCtx;
-    if(ctx.state === 'suspended') ctx.resume();
-
-    function tone(freq, start, dur, vol, type='sine'){
-      const osc  = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-      // Soft attack, long decay
-      gain.gain.setValueAtTime(0, ctx.currentTime + start);
-      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.06);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + dur);
-      osc.start(ctx.currentTime + start);
-      osc.stop(ctx.currentTime + start + dur + 0.05);
-    }
-
-    // Windows 10 startup: warm ascending notes G4→C5→E5→G5→C6 with harmonics
-    // Main melody
-    tone(392.00, 0.00, 0.55, 0.14);          // G4
-    tone(523.25, 0.22, 0.55, 0.16);          // C5
-    tone(659.25, 0.44, 0.55, 0.17);          // E5
-    tone(783.99, 0.66, 0.65, 0.18);          // G5
-    tone(1046.50, 0.90, 1.10, 0.20);         // C6 — long hold
-    tone(783.99,  1.10, 0.80, 0.10);         // G5 harmonic underneath
-    tone(1318.51, 0.92, 0.90, 0.08);         // E6 soft overtone
-    // Gentle tail
-    tone(1046.50, 1.80, 0.90, 0.06);         // C6 fade tail
-    tone(523.25,  1.85, 0.80, 0.05);         // C5 low resonance
-  } catch(e){}
+  if(_soundBlobUrl){
+    const a = new Audio(_soundBlobUrl);
+    a.volume = 0.8;
+    a.play().catch(()=>{});
+  }
 }
 
 // CLOCK
@@ -1218,6 +1212,60 @@ function confirmPinChange(){
 }
 function checkUpdates(){notify('🔄 Updates','Checking AquaSpace servers...');setTimeout(()=>notify('✅ Updates','AeroWaterOS is up to date — v2.2.0'),2500);}
 
+function logOut(){
+  // Confirm first
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)';
+  overlay.innerHTML=`
+    <div style="background:rgba(8,20,50,0.97);border:1px solid var(--glass-border);border-radius:20px;padding:32px;width:300px;box-shadow:0 24px 60px rgba(0,0,0,0.6);text-align:center;">
+      <div style="font-size:40px;margin-bottom:12px;">🚪</div>
+      <div style="font-family:var(--font-display);font-size:18px;font-weight:600;margin-bottom:8px;">Log Out</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:24px;line-height:1.6;">Are you sure you want to sign out? You will be returned to the setup screen.</div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="flex:1;padding:12px;border-radius:10px;background:rgba(255,255,255,0.07);border:1px solid var(--glass-border);color:var(--text-dim);cursor:pointer;font-family:var(--font);font-size:13px;">Cancel</button>
+        <button onclick="confirmLogOut()" style="flex:1;padding:12px;border-radius:10px;background:rgba(255,60,60,0.2);border:1px solid rgba(255,60,60,0.3);color:#ff6060;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:500;">Log Out</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function confirmLogOut(){
+  // Close overlay
+  const ov=document.querySelector('div[style*="9999"]');
+  if(ov)ov.remove();
+  // Hide desktop and OS completely
+  const po=document.getElementById('powerOverlay');
+  po.classList.add('fade');
+  setTimeout(()=>{
+    document.getElementById('desktop').style.display='none';
+    document.getElementById('taskbar').classList.remove('visible');
+    document.getElementById('lock').classList.add('hidden');
+    document.getElementById('boot').style.display='none';
+    document.getElementById('shutdownScreen').style.display='none';
+    po.classList.remove('fade');
+    // Reset OS state
+    startOpen=false;
+    document.getElementById('startMenu').classList.remove('visible');
+    // Show setup again, reset to welcome page
+    const sa=document.getElementById('setupApp');
+    sa.style.display='flex';
+    sa.style.opacity='0';
+    sa.style.transition='opacity .6s ease';
+    // Reset setup wizard to page 0
+    document.querySelectorAll('.s-page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('sp0').classList.add('active');
+    for(let i=0;i<5;i++){
+      const si=document.getElementById('ssi'+i);
+      si.classList.remove('active','done');
+      si.querySelector('.s-dot').textContent=i+1;
+    }
+    document.getElementById('sProgressFill').style.width='0%';
+    document.getElementById('signInPanel').style.display='none';
+    document.getElementById('siToggleBtn').textContent='Already have an account?';
+    setTimeout(()=>{sa.style.opacity='1';},50);
+  },800);
+}
+
 // TERMINAL
 const termHistory=[];let histIdx=-1;
 const termCommands={
@@ -1290,13 +1338,117 @@ function notepadSave(){const txt=document.getElementById('notepadArea').value;co
 function notepadClear(){document.getElementById('notepadArea').value='';}
 
 // AQUAPLAYER
-const playlist=[{title:'AquaSpace Vibes',artist:'AquaSpace Music',duration:212},{title:'Ocean Drive',artist:'AeroWave',duration:195},{title:'Deep Blue',artist:'AquaSpace Music',duration:238},{title:'Crystal Clear',artist:'WaterBeats',duration:178},{title:'Neon Tide',artist:'AeroWave',duration:256}];
-let playerIdx=0,playerPlaying=false,playerSecs=0,playerInterval=null;
-function playerLoad(idx){const t=playlist[idx];document.getElementById('playerTitle').textContent=t.title;document.getElementById('playerArtist').textContent=t.artist;document.getElementById('playerTotal').textContent=fmtTime(t.duration);document.getElementById('playerFill').style.width='0%';document.getElementById('playerCurrent').textContent='0:00';playerSecs=0;}
-function playerToggle(){playerPlaying=!playerPlaying;document.getElementById('playerPlayBtn').textContent=playerPlaying?'⏸':'▶';if(playerPlaying){playerInterval=setInterval(()=>{playerSecs++;const dur=playlist[playerIdx].duration;document.getElementById('playerCurrent').textContent=fmtTime(playerSecs);document.getElementById('playerFill').style.width=(playerSecs/dur*100)+'%';if(playerSecs>=dur)playerNext();},1000);}else clearInterval(playerInterval);}
-function playerPrev(){clearInterval(playerInterval);playerPlaying=false;playerIdx=(playerIdx-1+playlist.length)%playlist.length;playerLoad(playerIdx);document.getElementById('playerPlayBtn').textContent='▶';}
-function playerNext(){clearInterval(playerInterval);playerPlaying=false;playerIdx=(playerIdx+1)%playlist.length;playerLoad(playerIdx);document.getElementById('playerPlayBtn').textContent='▶';}
-function playerSeek(e){const b=document.getElementById('playerBar');const p=e.offsetX/b.offsetWidth;playerSecs=Math.floor(p*playlist[playerIdx].duration);document.getElementById('playerFill').style.width=(p*100)+'%';document.getElementById('playerCurrent').textContent=fmtTime(playerSecs);}
+const playlist=[
+  {title:'AquaSpace Vibes',   artist:'AquaSpace Music', duration:212, color:'#0070ff,#00c8ff', icon:'🌊'},
+  {title:'Ocean Drive',        artist:'AeroWave',        duration:195, color:'#7c3aed,#c084fc', icon:'🎸'},
+  {title:'Deep Blue',          artist:'AquaSpace Music', duration:238, color:'#0e7490,#22d3ee', icon:'🎹'},
+  {title:'Crystal Clear',      artist:'WaterBeats',      duration:178, color:'#065f46,#34d399', icon:'💎'},
+  {title:'Neon Tide',          artist:'AeroWave',        duration:256, color:'#be123c,#fb7185', icon:'🎵'},
+  {title:'Midnight Aqua',      artist:'AquaSpace Music', duration:201, color:'#1e3a8a,#60a5fa', icon:'🌙'},
+  {title:'Floating',           artist:'WaterBeats',      duration:184, color:'#713f12,#fbbf24', icon:'☁️'},
+];
+let playerIdx=0, playerPlaying=false, playerSecs=0, playerInterval=null, playerVol=0.7;
+
+function playerRenderPlaylist(){
+  const el=document.getElementById('playerPlaylist');
+  if(!el)return;
+  el.innerHTML=playlist.map((t,i)=>`
+    <div onclick="playerJump(${i})" style="padding:8px 10px;border-radius:8px;cursor:pointer;margin-bottom:2px;
+      background:${i===playerIdx?'rgba(0,200,255,0.12)':'transparent'};
+      border:1px solid ${i===playerIdx?'rgba(0,200,255,0.2)':'transparent'};
+      transition:background .15s;">
+      <div style="font-size:12px;font-weight:${i===playerIdx?'500':'400'};color:${i===playerIdx?'var(--text)':'var(--text-dim)'};
+        white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.icon} ${t.title}</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:2px;">${fmtTime(t.duration)}</div>
+    </div>`).join('');
+}
+
+function playerLoad(idx){
+  const t=playlist[idx];
+  const el=document.getElementById('playerTitle');
+  const ea=document.getElementById('playerArtist');
+  const et=document.getElementById('playerTotal');
+  const art=document.getElementById('playerAlbumArt');
+  if(el)el.textContent=t.title;
+  if(ea)ea.textContent=t.artist;
+  if(et)et.textContent=fmtTime(t.duration);
+  if(art){art.style.background=`linear-gradient(135deg,${t.color})`;art.textContent=t.icon;}
+  const fill=document.getElementById('playerFill');
+  const cur=document.getElementById('playerCurrent');
+  if(fill)fill.style.width='0%';
+  if(cur)cur.textContent='0:00';
+  playerSecs=0;
+  playerRenderPlaylist();
+}
+
+function playerJump(idx){
+  clearInterval(playerInterval);
+  playerPlaying=false;
+  playerIdx=idx;
+  playerLoad(idx);
+  const btn=document.getElementById('playerPlayBtn');
+  if(btn)btn.textContent='▶';
+  const art=document.getElementById('playerAlbumArt');
+  if(art)art.style.transform='scale(1)';
+  // Auto-play on jump
+  setTimeout(()=>playerToggle(),100);
+}
+
+function playerToggle(){
+  playerPlaying=!playerPlaying;
+  const btn=document.getElementById('playerPlayBtn');
+  const art=document.getElementById('playerAlbumArt');
+  if(btn)btn.textContent=playerPlaying?'⏸':'▶';
+  if(art)art.style.transform=playerPlaying?'scale(1.04) rotate(-1deg)':'scale(1)';
+  if(playerPlaying){
+    playerInterval=setInterval(()=>{
+      playerSecs++;
+      const dur=playlist[playerIdx].duration;
+      const cur=document.getElementById('playerCurrent');
+      const fill=document.getElementById('playerFill');
+      if(cur)cur.textContent=fmtTime(playerSecs);
+      if(fill)fill.style.width=(playerSecs/dur*100)+'%';
+      if(playerSecs>=dur)playerNext();
+    },1000);
+  } else {
+    clearInterval(playerInterval);
+  }
+}
+
+function playerPrev(){
+  clearInterval(playerInterval); playerPlaying=false;
+  playerIdx=(playerIdx-1+playlist.length)%playlist.length;
+  playerLoad(playerIdx);
+  const btn=document.getElementById('playerPlayBtn');
+  if(btn)btn.textContent='▶';
+}
+
+function playerNext(){
+  clearInterval(playerInterval); playerPlaying=false;
+  playerIdx=(playerIdx+1)%playlist.length;
+  playerLoad(playerIdx);
+  const btn=document.getElementById('playerPlayBtn');
+  if(btn)btn.textContent='▶';
+  setTimeout(()=>playerToggle(),100);
+}
+
+function playerSeek(e){
+  const b=document.getElementById('playerBar');
+  if(!b)return;
+  const p=Math.max(0,Math.min(1,e.offsetX/b.offsetWidth));
+  playerSecs=Math.floor(p*playlist[playerIdx].duration);
+  const fill=document.getElementById('playerFill');
+  const cur=document.getElementById('playerCurrent');
+  if(fill)fill.style.width=(p*100)+'%';
+  if(cur)cur.textContent=fmtTime(playerSecs);
+}
+
+function playerVolumeChange(v){
+  playerVol=v/100;
+  const pct=document.getElementById('playerVolPct');
+  if(pct)pct.textContent=v+'%';
+}
+
 function fmtTime(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 playerLoad(0);
 
