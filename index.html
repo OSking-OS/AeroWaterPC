@@ -618,6 +618,8 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
         <div class="sidebar-header">Drives</div>
         <div class="sidebar-item" onclick="showFiles('c',this)"><span class="sidebar-icon">💾</span>AquaDrive (C:)</div>
         <div class="sidebar-item" onclick="showFiles('d',this)"><span class="sidebar-icon">📀</span>Cloud (D:)</div>
+        <div class="sidebar-header">Operating System</div>
+        <div class="sidebar-item" onclick="showFiles('os',this)"><span class="sidebar-icon">◈</span>AeroWaterOS</div>
       </div>
       <div class="files-body-area"><div class="files-grid" id="filesGrid"></div></div>
     </div>
@@ -784,6 +786,317 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
   <div class="ctx-item" onclick="openWindow('win-settings');ctxMenu.style.display='none'">⚙️ Display settings</div>
   <div class="ctx-sep"></div>
   <div class="ctx-item" onclick="refreshDesktop()">↻ Refresh</div>
+</div>
+
+<!-- ══ EOL NOTICE ══ -->
+<div id="eolScreen" style="display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,0.92);backdrop-filter:blur(20px);align-items:center;justify-content:center;flex-direction:column;gap:0;">
+  <div style="background:rgba(8,20,50,0.97);border:1px solid rgba(0,200,255,0.25);border-radius:24px;padding:44px 48px;max-width:540px;width:90%;box-shadow:0 32px 80px rgba(0,0,0,0.7);text-align:center;">
+    <div style="font-size:56px;margin-bottom:16px;">⚠️</div>
+    <div style="font-family:var(--font-display);font-size:24px;font-weight:600;margin-bottom:10px;color:var(--accent);">AeroWaterOS 2.1 — End of Support</div>
+    <div style="font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:28px;">
+      AeroWaterOS 2.1 has reached its end of support date.<br>
+      Security updates and new features are no longer available.<br><br>
+      <strong style="color:var(--text);">AeroWaterOS 3.0</strong> is now available with a brand new design,<br>improved security and new AquaSpace features.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <button onclick="goToV30()" style="width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,#0070ff,#00c8ff);border:none;color:white;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 24px rgba(0,200,255,0.3);transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        🚀 Upgrade to AeroWaterOS 3.0
+      </button>
+      <button onclick="stayOnV21()" style="width:100%;padding:13px;border-radius:14px;background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);color:var(--text-dim);font-family:var(--font);font-size:13px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+        I'd rather use this version
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ UPGRADE CHOICE SCREEN ══ -->
+<div id="upgradeChoice" style="display:none;position:fixed;inset:0;z-index:401;background:rgba(0,0,0,0.92);backdrop-filter:blur(20px);align-items:center;justify-content:center;">
+  <div style="background:rgba(8,20,50,0.97);border:1px solid rgba(0,200,255,0.25);border-radius:24px;padding:44px 48px;max-width:520px;width:90%;box-shadow:0 32px 80px rgba(0,0,0,0.7);text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+    <div style="font-family:var(--font-display);font-size:22px;font-weight:600;margin-bottom:8px;color:var(--accent);">Upgrade to AeroWaterOS 3.0</div>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:28px;line-height:1.7;">Choose how you'd like to install AeroWaterOS 3.0.</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <!-- Upgrade option -->
+      <div onclick="selectUpgradeType('upgrade')" style="padding:20px;border-radius:14px;background:rgba(0,200,255,0.07);border:1px solid rgba(0,200,255,0.2);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.background='rgba(0,200,255,0.12)'" onmouseout="this.style.background='rgba(0,200,255,0.07)'">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px;">⬆️ Upgrade your OS</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">Your data, files and settings from AeroWaterOS 2.1 are preserved and transferred to 3.0.</div>
+      </div>
+      <!-- Fresh install option -->
+      <div onclick="selectUpgradeType('fresh')" style="padding:20px;border-radius:14px;background:rgba(255,80,80,0.07);border:1px solid rgba(255,80,80,0.2);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.background='rgba(255,80,80,0.12)'" onmouseout="this.style.background='rgba(255,80,80,0.07)'">
+        <div style="font-size:15px;font-weight:600;margin-bottom:6px;">🔄 Restart version</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">All your data gets deleted. A fresh install of AeroWaterOS 3.0 starts from scratch.</div>
+      </div>
+    </div>
+    <button onclick="document.getElementById('upgradeChoice').style.display='none';document.getElementById('eolScreen').style.display='flex';"
+      style="margin-top:16px;padding:10px 20px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);color:var(--text-dim);cursor:pointer;font-family:var(--font);font-size:12px;">← Back</button>
+  </div>
+</div>
+
+<!-- ══ 2.1 RE-LOGIN ══ -->
+<div id="relogin21" style="display:none;position:fixed;inset:0;z-index:402;background:rgba(0,5,20,0.88);backdrop-filter:blur(30px);align-items:center;justify-content:center;flex-direction:column;">
+  <div style="font-family:var(--font-display);font-size:32px;font-weight:600;color:var(--accent);margin-bottom:4px;">◈ AeroWaterOS</div>
+  <div style="font-size:11px;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;">AquaSpace Corporation</div>
+  <div style="background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);border-radius:20px;padding:36px 40px;width:360px;backdrop-filter:blur(20px);">
+    <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;margin:0 auto 16px;" id="reloginAvatar">A</div>
+    <div style="font-size:16px;font-weight:500;text-align:center;margin-bottom:4px;" id="reloginUser">aquauser</div>
+    <div style="font-size:12px;color:var(--text-dim);text-align:center;margin-bottom:24px;">Sign in to AeroWaterOS 2.1</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Username</div>
+      <input id="rl21User" class="login-field" placeholder="Username" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid var(--glass-border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:var(--font);font-size:14px;outline:none;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Email Address</div>
+      <input id="rl21Email" class="login-field" type="email" placeholder="your@gmail.com" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid var(--glass-border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:var(--font);font-size:14px;outline:none;">
+    </div>
+    <div style="margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">PIN</div>
+      <div style="position:relative;">
+        <input id="reloginPin" type="password" maxlength="4" placeholder="••••" autocomplete="off"
+          style="width:100%;background:rgba(255,255,255,0.07);border:1px solid var(--glass-border);border-radius:10px;padding:11px 40px 11px 14px;color:var(--text);font-family:var(--font);font-size:20px;letter-spacing:8px;text-align:center;outline:none;"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');" onkeydown="if(event.key==='Enter')reloginCheck()">
+        <button onclick="const i=document.getElementById('reloginPin');i.type=i.type==='password'?'text':'password'"
+          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:14px;">👁</button>
+      </div>
+    </div>
+    <div id="reloginErr" style="font-size:12px;color:#ff6060;text-align:center;min-height:16px;margin-bottom:12px;"></div>
+    <button onclick="reloginCheck()" style="width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;color:white;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;">Sign in to 2.1</button>
+  </div>
+</div>
+<div id="os30" style="display:none;position:fixed;inset:0;z-index:450;font-family:'Figtree',sans-serif;">
+
+  <!-- Frutiger Aero Wallpaper -->
+  <div id="wall30" style="position:absolute;inset:0;overflow:hidden;
+    background:linear-gradient(180deg,#7ec8e3 0%,#4aa8d8 25%,#2080c0 55%,#1a5fa0 80%,#2d7a3a 80%,#1e5c2a 100%);">
+    <!-- Sun glow -->
+    <div style="position:absolute;width:500px;height:500px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,255,220,0.55) 0%,rgba(255,220,100,0.2) 40%,transparent 70%);
+      top:-100px;right:15%;pointer-events:none;"></div>
+    <!-- Clouds -->
+    <div style="position:absolute;top:8%;left:5%;width:280px;height:90px;border-radius:50px;
+      background:rgba(255,255,255,0.55);filter:blur(12px);"></div>
+    <div style="position:absolute;top:12%;left:12%;width:180px;height:60px;border-radius:50px;
+      background:rgba(255,255,255,0.45);filter:blur(8px);"></div>
+    <div style="position:absolute;top:6%;right:20%;width:220px;height:75px;border-radius:50px;
+      background:rgba(255,255,255,0.5);filter:blur(10px);"></div>
+    <!-- Water reflection on sky -->
+    <div style="position:absolute;top:30%;left:0;right:0;height:200px;
+      background:linear-gradient(180deg,transparent,rgba(100,180,255,0.15),transparent);"></div>
+    <!-- Grass hills -->
+    <div style="position:absolute;bottom:0;left:-5%;right:-5%;height:25%;
+      background:radial-gradient(ellipse 70% 100% at 50% 100%,#3a9e48,#1e5c2a);border-radius:60% 60% 0 0;"></div>
+    <div style="position:absolute;bottom:0;left:-10%;width:60%;height:18%;
+      background:radial-gradient(ellipse 100% 100% at 50% 100%,#4ab055,#2a7a36);border-radius:60% 100% 0 0;"></div>
+    <div style="position:absolute;bottom:0;right:-10%;width:55%;height:20%;
+      background:radial-gradient(ellipse 100% 100% at 50% 100%,#3d9545,#245e2e);border-radius:100% 60% 0 0;"></div>
+    <!-- Glossy sphere decorations -->
+    <div style="position:absolute;bottom:15%;left:8%;width:80px;height:80px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.8),rgba(100,200,255,0.4) 50%,rgba(0,100,200,0.3));
+      box-shadow:0 8px 24px rgba(0,60,180,0.3);"></div>
+    <div style="position:absolute;bottom:20%;right:10%;width:56px;height:56px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.8),rgba(150,220,255,0.5) 50%,rgba(0,120,220,0.3));
+      box-shadow:0 6px 18px rgba(0,60,180,0.25);"></div>
+    <!-- AquaSpace logo watermark -->
+    <div style="position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
+      font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
+      color:rgba(255,255,255,0.25);letter-spacing:3px;text-transform:uppercase;">AquaSpace Corporation</div>
+  </div>
+
+  <!-- Desktop icons (top-left, double-click to open) -->
+  <div id="icons30" style="position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:4px;z-index:451;"></div>
+
+  <!-- 3.0 Login — full login with Frutiger Aero design -->
+  <div id="login30" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:455;
+    background:rgba(0,20,60,0.35);backdrop-filter:blur(8px);">
+    <div style="
+      width:400px;
+      background:linear-gradient(170deg,
+        rgba(255,255,255,0.38) 0%,
+        rgba(200,230,255,0.28) 40%,
+        rgba(120,180,255,0.22) 70%,
+        rgba(60,120,240,0.30) 100%);
+      border:1px solid rgba(255,255,255,0.60);
+      border-radius:20px;
+      padding:44px 44px 36px;
+      box-shadow:
+        0 32px 80px rgba(0,30,130,0.55),
+        0 0 0 1px rgba(255,255,255,0.30) inset,
+        0 1px 0 rgba(255,255,255,0.60) inset;
+      backdrop-filter:blur(40px) saturate(200%);
+      text-align:center;">
+      <!-- Glossy avatar sphere -->
+      <div style="width:80px;height:80px;border-radius:50%;margin:0 auto 16px;
+        background:radial-gradient(circle at 32% 28%,
+          rgba(255,255,255,0.95) 0%,
+          rgba(180,220,255,0.75) 30%,
+          rgba(80,150,255,0.55) 60%,
+          rgba(20,80,200,0.45) 100%);
+        border:3px solid rgba(255,255,255,0.75);
+        box-shadow:0 12px 32px rgba(0,50,200,0.40),0 0 0 6px rgba(255,255,255,0.12),0 2px 0 rgba(255,255,255,0.8) inset;
+        display:flex;align-items:center;justify-content:center;
+        font-size:30px;font-weight:700;color:rgba(10,40,140,0.85);
+        font-family:'Space Grotesk',sans-serif;" id="avatar30">A</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;
+        color:white;text-shadow:0 2px 8px rgba(0,30,130,0.6);margin-bottom:4px;" id="login30User">aquauser</div>
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;
+        color:rgba(255,255,255,0.60);margin-bottom:28px;">AeroWaterOS 3.0</div>
+
+      <!-- Username -->
+      <div style="margin-bottom:10px;text-align:left;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;">Username</div>
+        <input id="l30user" placeholder="Username"
+          style="width:100%;background:rgba(255,255,255,0.20);border:1px solid rgba(255,255,255,0.45);
+          border-radius:10px;padding:11px 14px;color:white;font-family:var(--font);font-size:14px;
+          outline:none;backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,0.4) inset;"
+          onfocus="this.style.borderColor='rgba(255,255,255,0.8)'" onblur="this.style.borderColor='rgba(255,255,255,0.45)'"
+          placeholder="aquauser">
+      </div>
+      <!-- Email -->
+      <div style="margin-bottom:10px;text-align:left;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;">Email Address</div>
+        <input id="l30email" type="email" placeholder="your@gmail.com"
+          style="width:100%;background:rgba(255,255,255,0.20);border:1px solid rgba(255,255,255,0.45);
+          border-radius:10px;padding:11px 14px;color:white;font-family:var(--font);font-size:14px;
+          outline:none;backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,0.4) inset;"
+          onfocus="this.style.borderColor='rgba(255,255,255,0.8)'" onblur="this.style.borderColor='rgba(255,255,255,0.45)'">
+      </div>
+      <!-- PIN -->
+      <div style="margin-bottom:16px;text-align:left;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;">PIN</div>
+        <div style="position:relative;">
+          <input id="pin30" type="password" maxlength="4" autocomplete="off" placeholder="••••"
+            style="width:100%;background:rgba(255,255,255,0.20);border:1px solid rgba(255,255,255,0.45);
+            border-radius:10px;padding:11px 40px 11px 14px;color:white;font-family:var(--font);
+            font-size:22px;letter-spacing:10px;text-align:center;outline:none;
+            backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,0.4) inset;"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');pin30Type()"
+            onkeydown="if(event.key==='Enter')login30Check()"
+            onfocus="this.style.borderColor='rgba(255,255,255,0.8)'" onblur="this.style.borderColor='rgba(255,255,255,0.45)'">
+          <button onclick="const i=document.getElementById('pin30');i.type=i.type==='password'?'text':'password'"
+            style="position:absolute;right:12px;top:50%;transform:translateY(-50%);
+            background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.6);font-size:15px;">👁</button>
+        </div>
+      </div>
+      <div id="pin30err" style="font-size:12px;min-height:16px;margin-bottom:12px;
+        color:rgba(255,180,180,1);text-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
+      <!-- Aero sign-in button -->
+      <button onclick="login30Check()" style="width:100%;padding:13px;border-radius:12px;
+        background:linear-gradient(180deg,rgba(255,255,255,0.50) 0%,rgba(160,210,255,0.55) 45%,rgba(60,130,240,0.75) 100%);
+        border:1px solid rgba(255,255,255,0.55);color:white;font-family:var(--font);font-size:14px;font-weight:600;
+        cursor:pointer;box-shadow:0 6px 20px rgba(0,60,200,0.45),0 1px 0 rgba(255,255,255,0.6) inset;
+        text-shadow:0 1px 3px rgba(0,40,150,0.6);transition:opacity .15s;"
+        onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        Sign in to AeroWaterOS 3.0
+      </button>
+    </div>
+  </div>
+
+  <!-- 3.0 Desktop (hidden until login) -->
+  <div id="desktop30" style="display:none;position:absolute;inset:0;">
+    <div id="wins30"></div>
+
+    <!-- Aero Taskbar -->
+    <div id="taskbar30" style="position:fixed;bottom:0;left:0;right:0;height:44px;
+      background:linear-gradient(180deg,rgba(100,160,240,0.7) 0%,rgba(40,90,200,0.85) 50%,rgba(20,60,170,0.9) 100%);
+      backdrop-filter:blur(20px);
+      border-top:2px solid rgba(255,255,255,0.4);
+      box-shadow:0 -4px 20px rgba(0,30,120,0.5),0 1px 0 rgba(255,255,255,0.3) inset;
+      display:flex;align-items:center;padding:0 8px;gap:4px;z-index:460;">
+
+      <!-- Aero Start button — glossy orb -->
+      <button onclick="toggle30Start()" id="start30btn"
+        style="width:44px;height:34px;border-radius:8px;
+          background:linear-gradient(180deg,rgba(255,255,255,0.55) 0%,rgba(180,220,255,0.5) 45%,rgba(60,130,255,0.7) 100%);
+          border:1px solid rgba(255,255,255,0.6);
+          box-shadow:0 2px 8px rgba(0,40,180,0.4),0 1px 0 rgba(255,255,255,0.6) inset;
+          color:rgba(20,60,180,0.9);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;
+          cursor:pointer;text-shadow:0 1px 2px rgba(255,255,255,0.8);">◈</button>
+
+      <div style="width:1px;height:28px;background:rgba(255,255,255,0.25);margin:0 4px;"></div>
+
+      <!-- Running apps -->
+      <div id="tbRunning30" style="display:flex;align-items:center;gap:3px;flex:1;overflow:hidden;"></div>
+
+      <!-- Clock -->
+      <div style="text-align:right;padding:0 10px;">
+        <div id="tbTime30" style="font-size:12px;font-weight:600;color:white;text-shadow:0 1px 3px rgba(0,30,120,0.6);"></div>
+        <div id="tbDate30" style="font-size:10px;color:rgba(255,255,255,0.75);text-shadow:0 1px 2px rgba(0,30,120,0.5);"></div>
+      </div>
+    </div>
+
+    <!-- Aero Start Menu — proper Windows 7 style -->
+    <div id="startMenu30" style="display:none;position:fixed;bottom:46px;left:6px;width:480px;
+      z-index:465;border-radius:12px 12px 4px 4px;overflow:hidden;
+      box-shadow:0 -8px 40px rgba(0,30,140,0.5),0 0 0 1px rgba(255,255,255,0.3);
+      border:1px solid rgba(255,255,255,0.4);">
+      <!-- Top section — two columns like Win7 -->
+      <div style="display:flex;min-height:340px;">
+        <!-- Left col — pinned/recent apps -->
+        <div style="flex:1;background:linear-gradient(180deg,rgba(240,248,255,0.95),rgba(220,238,255,0.95));padding:12px 0;">
+          <div style="font-size:10px;color:rgba(60,100,180,0.7);letter-spacing:1.5px;text-transform:uppercase;padding:4px 16px 8px;font-weight:600;">PINNED</div>
+          <div onclick="open30Win('browser30')" class="sm30item">
+            <span style="font-size:20px;">🌊</span>
+            <div><div style="font-size:13px;font-weight:500;">AeroWater Edge</div><div style="font-size:11px;color:#888;">Web browser</div></div>
+          </div>
+          <div onclick="open30Win('files30')" class="sm30item">
+            <span style="font-size:20px;">📁</span>
+            <div><div style="font-size:13px;font-weight:500;">Files</div><div style="font-size:11px;color:#888;">File explorer</div></div>
+          </div>
+          <div onclick="open30Win('settings30')" class="sm30item">
+            <span style="font-size:20px;">⚙️</span>
+            <div><div style="font-size:13px;font-weight:500;">Settings</div><div style="font-size:11px;color:#888;">System preferences</div></div>
+          </div>
+          <div onclick="open30Win('notepad30')" class="sm30item">
+            <span style="font-size:20px;">📝</span>
+            <div><div style="font-size:13px;font-weight:500;">Notepad</div><div style="font-size:11px;color:#888;">Text editor</div></div>
+          </div>
+          <div onclick="open30Win('paint30')" class="sm30item">
+            <span style="font-size:20px;">🎨</span>
+            <div><div style="font-size:13px;font-weight:500;">AquaPaint</div><div style="font-size:11px;color:#888;">Image editor</div></div>
+          </div>
+        </div>
+        <!-- Right col — blue gradient like Win7 -->
+        <div style="width:160px;background:linear-gradient(180deg,rgba(60,120,220,0.9),rgba(30,70,180,0.95));padding:12px 0;border-left:1px solid rgba(255,255,255,0.2);">
+          <div style="font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px 8px;font-weight:600;">PLACES</div>
+          <div onclick="open30Win('files30')" class="sm30right">📁 Documents</div>
+          <div onclick="open30Win('files30')" class="sm30right">🖼️ Pictures</div>
+          <div onclick="open30Win('files30')" class="sm30right">🎵 Music</div>
+          <div onclick="open30Win('settings30')" class="sm30right">⚙️ Settings</div>
+          <div onclick="open30Win('settings30')" class="sm30right">🖥️ Control Panel</div>
+          <div style="height:1px;background:rgba(255,255,255,0.15);margin:8px 14px;"></div>
+          <div onclick="exit30()" class="sm30right" style="color:rgba(255,200,180,1);">↪ Exit to 2.1</div>
+        </div>
+      </div>
+      <!-- Bottom bar -->
+      <div style="background:linear-gradient(180deg,rgba(40,90,200,0.92),rgba(20,60,170,0.97));
+        padding:8px 14px;display:flex;justify-content:space-between;align-items:center;
+        border-top:1px solid rgba(255,255,255,0.25);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:32px;height:32px;border-radius:50%;
+            background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.8),rgba(140,200,255,0.5) 50%,rgba(40,120,220,0.5));
+            border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;
+            font-size:13px;font-weight:700;color:rgba(20,60,160,0.9);" id="smAvatar30">A</div>
+          <span style="color:white;font-size:13px;font-weight:500;" id="smUser30">aquauser</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="lock30()" style="padding:5px 12px;border-radius:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;cursor:pointer;font-size:12px;">🔒</button>
+          <button onclick="shutdownOS()" style="padding:5px 12px;border-radius:6px;background:rgba(255,80,80,0.25);border:1px solid rgba(255,120,120,0.4);color:white;cursor:pointer;font-size:12px;">↪</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    .sm30item {
+      display:flex;align-items:center;gap:12px;padding:8px 16px;cursor:pointer;
+      color:#1a3060;transition:background .12s;
+    }
+    .sm30item:hover { background:linear-gradient(90deg,rgba(100,160,255,0.25),rgba(80,140,255,0.1)); }
+    .sm30right {
+      display:block;padding:7px 14px;cursor:pointer;font-size:12px;color:rgba(255,255,255,0.85);
+      transition:background .12s;
+    }
+    .sm30right:hover { background:rgba(255,255,255,0.12); }
+    </style>
+  </div>
 </div>
 
 <script>
@@ -1115,19 +1428,15 @@ function applyLanguage(lang){
 }
 
 function sLaunchOS(){
-  prefetchSound(); // fetch MP3 now during user gesture
-  // Transfer data
+  prefetchSound();
   CORRECT_PIN = window._osPin || '1234';
   userName    = window._osUser || 'aquauser';
   deviceName  = window._osDevice || 'AquaPC-1';
-  // Apply language
   applyLanguage(window._osLang || 'en');
-  // Update OS UI
   document.getElementById('smUsername').textContent = userName;
   document.getElementById('smAvatar').textContent = userName[0].toUpperCase();
   document.getElementById('lockUsername').textContent = userName;
   document.getElementById('termPrompt').textContent = userName+'@'+deviceName+':~$';
-  // Hide setup, show boot
   const sa=document.getElementById('setupApp');
   sa.style.transition='opacity .8s ease';
   sa.style.opacity='0';
@@ -1138,16 +1447,296 @@ function sLaunchOS(){
     setTimeout(()=>{
       document.getElementById('boot').classList.add('hidden');
       document.getElementById('boot').style.display='none';
-      document.getElementById('lock').classList.remove('hidden');
-      // ✅ AudioContext already unlocked by the Launch button click above
-      playStartupSound();
+      // Show EOL notice before desktop
+      showEOLNotice();
     },4200);
   },800);
 }
 
 /* ══════════════════════════════════════════
-   OS JS
+   EOL NOTICE
 ══════════════════════════════════════════ */
+function showEOLNotice(){
+  const eol = document.getElementById('eolScreen');
+  eol.style.display='flex';
+}
+
+function stayOnV21(){
+  document.getElementById('eolScreen').style.display='none';
+  const rl=document.getElementById('relogin21');
+  rl.style.display='flex';
+  document.getElementById('reloginUser').textContent=userName;
+  document.getElementById('reloginAvatar').textContent=userName[0].toUpperCase();
+  setTimeout(()=>document.getElementById('reloginPin').focus(),200);
+}
+
+function reloginType(){
+  const inp=document.getElementById('reloginPin');
+  const val=inp.value.replace(/[^0-9]/g,'').slice(0,4);
+  inp.value=val;
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('rl'+i);
+    if(d){d.style.background=i<val.length?'var(--accent)':'transparent';d.style.borderColor=i<val.length?'var(--accent)':'rgba(255,255,255,0.4)';}
+  }
+  if(val.length===4)reloginCheck();
+}
+
+function reloginCheck(){
+  const val=document.getElementById('reloginPin').value;
+  if(val===CORRECT_PIN){
+    document.getElementById('relogin21').style.display='none';
+    const desk=document.getElementById('desktop');
+    desk.style.display='block'; desk.style.opacity='0'; desk.style.transition='opacity 1s ease';
+    setTimeout(()=>{desk.style.opacity='1';document.getElementById('taskbar').classList.add('visible');},100);
+    playStartupSound();
+    setTimeout(()=>notify('◈ AeroWaterOS 2.1',`Welcome back, ${userName}!`),2000);
+  } else {
+    document.getElementById('reloginErr').textContent='Incorrect PIN. Try again.';
+    document.getElementById('reloginPin').value='';
+    for(let i=0;i<4;i++){const d=document.getElementById('rl'+i);if(d){d.style.background='transparent';d.style.borderColor='rgba(255,255,255,0.4)';}}
+    setTimeout(()=>document.getElementById('reloginErr').textContent='',2000);
+  }
+}
+
+function goToV30(){
+  document.getElementById('eolScreen').style.display='none';
+  document.getElementById('upgradeChoice').style.display='flex';
+}
+
+function selectUpgradeType(type){
+  document.getElementById('upgradeChoice').style.display='none';
+  if(type==='fresh'){
+    localStorage.removeItem('awos_accounts');
+    CORRECT_PIN='1234';
+  }
+  launchV30();
+}
+
+function launchV30(){
+  document.getElementById('desktop').style.display='none';
+  document.getElementById('taskbar').classList.remove('visible');
+  document.getElementById('lock').classList.add('hidden');
+  document.getElementById('relogin21').style.display='none';
+  const os30=document.getElementById('os30');
+  os30.style.display='block';
+  document.getElementById('login30User').textContent=userName;
+  document.getElementById('avatar30').textContent=userName[0].toUpperCase();
+  const sm=document.getElementById('smAvatar30'); if(sm)sm.textContent=userName[0].toUpperCase();
+  const su=document.getElementById('smUser30'); if(su)su.textContent=userName;
+  // Reset pin
+  document.getElementById('pin30').value='';
+  pin30Type();
+  setTimeout(()=>document.getElementById('pin30').focus(),300);
+  playStartupSound();
+}
+
+/* ══════════════════════════════════════════
+   3.0 OS
+══════════════════════════════════════════ */
+let start30Open = false;
+let winZ30 = 460;
+
+function pin30Type(){
+  const val=document.getElementById('pin30').value;
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('p30d'+i);
+    if(d){
+      d.style.background=i<val.length?'white':'transparent';
+      d.style.borderColor=i<val.length?'white':'rgba(255,255,255,0.55)';
+      d.style.boxShadow=i<val.length?'0 0 8px rgba(255,255,255,0.5)':'';
+    }
+  }
+  if(val.length===4) login30Check();
+}
+
+function login30Check(){
+  const val=document.getElementById('pin30').value;
+  const err=document.getElementById('pin30err');
+  if(val===CORRECT_PIN){
+    document.getElementById('login30').style.display='none';
+    document.getElementById('desktop30').style.display='block';
+    build30Icons();
+    if(!window._clock30set){ setInterval(update30Clock,1000); window._clock30set=true; }
+    update30Clock();
+    setTimeout(()=>notify('◈ AeroWaterOS 3.0','Welcome to AeroWaterOS 3.0!'),1000);
+  } else {
+    err.textContent='Incorrect PIN. Try again.';
+    document.getElementById('pin30').value='';
+    pin30Type();
+    setTimeout(()=>err.textContent='',2000);
+  }
+}
+
+function update30Clock(){
+  const now=new Date();
+  const t30=document.getElementById('tbTime30');
+  const d30=document.getElementById('tbDate30');
+  if(t30)t30.textContent=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  if(d30)d30.textContent=now.toLocaleDateString();
+}
+
+function build30Icons(){
+  const icons30 = document.getElementById('icons30');
+  const apps=[
+    {icon:'🌊',name:'Edge',id:'browser30'},
+    {icon:'📁',name:'Files',id:'files30'},
+    {icon:'⚙️',name:'Settings',id:'settings30'},
+  ];
+  icons30.innerHTML=apps.map(a=>`
+    <div ondblclick="open30Win('${a.id}')" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px;border-radius:10px;cursor:pointer;width:76px;transition:background .15s;"
+      onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='transparent'">
+      <span style="font-size:38px;filter:drop-shadow(0 2px 6px rgba(0,80,200,0.4));">${a.icon}</span>
+      <span style="font-size:11px;color:white;text-shadow:0 1px 4px rgba(0,0,0,0.6);text-align:center;">${a.name}</span>
+    </div>`).join('');
+}
+
+function toggle30Start(){
+  start30Open=!start30Open;
+  document.getElementById('startMenu30').style.display=start30Open?'block':'none';
+}
+
+function open30Win(id){
+  document.getElementById('startMenu30').style.display='none';
+  start30Open=false;
+  const existing=document.getElementById(id+'-win');
+  if(existing){ existing.style.display='flex'; return; }
+
+  const contents={
+    browser30:`<div style="padding:12px;background:rgba(240,248,255,0.15);border-bottom:1px solid rgba(255,255,255,0.2);display:flex;gap:8px;align-items:center;">
+      <button style="background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:5px 10px;color:white;cursor:pointer;font-size:13px;">←</button>
+      <button style="background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:5px 10px;color:white;cursor:pointer;font-size:13px;">→</button>
+      <input placeholder="Search or enter URL..." onkeydown="if(event.key==='Enter'){const f=this.closest('.win30').querySelector('iframe');f.src='https://duckduckgo.com/?q='+encodeURIComponent(this.value);f.style.display='block';this.closest('.win30').querySelector('.nt30').style.display='none';}"
+        style="flex:1;background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:6px 12px;color:white;font-size:13px;outline:none;">
+      </div>
+      <div class="nt30" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:white;">
+        <div style="font-size:28px;font-weight:600;font-family:'Space Grotesk',sans-serif;">AeroWater Edge 3.0</div>
+        <input placeholder="Search the web..." onkeydown="if(event.key==='Enter'){const f=this.closest('.win30').querySelector('iframe');f.src='https://duckduckgo.com/?q='+encodeURIComponent(this.value);f.style.display='block';this.closest('.win30').querySelector('.nt30').style.display='none';}"
+          style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:10px 20px;color:white;font-size:14px;outline:none;width:320px;text-align:center;">
+      </div>
+      <iframe style="display:none;flex:1;border:none;" src="about:blank"></iframe>`,
+    files30:`<div style="flex:1;padding:20px;color:white;">
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">📁 Documents &nbsp;📁 Downloads &nbsp;📁 Pictures &nbsp;🎵 Music</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+        ${['📁 Documents','📁 Downloads','🖼️ Pictures','🎵 Music','🎬 Videos','📄 README.txt'].map(f=>`
+          <div style="padding:14px 8px;border-radius:10px;background:rgba(255,255,255,0.15);cursor:pointer;text-align:center;font-size:12px;color:white;transition:background .15s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">${f}</div>`).join('')}
+      </div>
+    </div>`,
+    settings30:`<div style="flex:1;padding:20px;color:white;overflow-y:auto;">
+      <div style="font-size:16px;font-weight:600;margin-bottom:16px;font-family:'Space Grotesk',sans-serif;">AeroWaterOS 3.0 Settings</div>
+      ${[['🖥️','System','AeroWaterOS 3.0 — AQS-30000'],['👤','Account',userName],['💻','Device',deviceName],['🏢','Developer','AquaSpace Corp.']].map(r=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.12);margin-bottom:8px;border:1px solid rgba(255,255,255,0.2);">
+          <span style="font-size:18px;">${r[0]}</span>
+          <span style="flex:1;font-size:13px;">${r[1]}</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.7);">${r[2]}</span>
+        </div>`).join('')}
+    </div>`,
+  };
+
+  const titles={browser30:'🌊 AeroWater Edge 3.0',files30:'📁 Files',settings30:'⚙️ Settings'};
+  winZ30++;
+  const win=document.createElement('div');
+  win.id=id+'-win';
+  win.className='win30';
+  win.style.cssText=`position:absolute;top:60px;left:${80+winZ30%200}px;width:700px;height:480px;
+    background:linear-gradient(160deg,rgba(180,220,255,0.22),rgba(60,130,230,0.30));
+    backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.35);border-radius:14px;
+    box-shadow:0 16px 48px rgba(0,40,160,0.4);display:flex;flex-direction:column;overflow:hidden;z-index:${winZ30};`;
+  win.innerHTML=`
+    <div style="height:38px;display:flex;align-items:center;padding:0 12px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.3),rgba(120,180,255,0.2));
+      border-bottom:1px solid rgba(255,255,255,0.25);cursor:move;gap:8px;" onmousedown="drag30(event,'${id}-win')">
+      <span style="font-size:12px;font-weight:500;color:white;text-shadow:0 1px 2px rgba(0,50,150,0.5);flex:1;">${titles[id]||id}</span>
+      <button onclick="min30('${id}-win','${titles[id]||id}')" style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:12px;">−</button>
+      <button onclick="document.getElementById('${id}-win').remove();remove30Tb('${id}-win')" style="width:24px;height:24px;border-radius:6px;background:rgba(255,80,80,0.4);border:1px solid rgba(255,120,120,0.5);color:white;cursor:pointer;font-size:14px;">✕</button>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">${contents[id]||'<div style=padding:20px;color:white>Coming soon</div>'}</div>`;
+  document.getElementById('wins30').appendChild(win);
+}
+
+function drag30(e,id){
+  const win=document.getElementById(id);
+  const sx=e.clientX-win.offsetLeft,sy=e.clientY-win.offsetTop;
+  const mv=ev=>{win.style.left=(ev.clientX-sx)+'px';win.style.top=(ev.clientY-sy)+'px';};
+  const up=()=>{document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);};
+  document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
+}
+
+function min30(id,title){
+  document.getElementById(id).style.display='none';
+  const tb=document.getElementById('tbRunning30');
+  if(!document.getElementById('tbr-'+id)){
+    const btn=document.createElement('button');
+    btn.id='tbr-'+id;
+    btn.style.cssText='background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:4px 10px;color:white;font-size:12px;cursor:pointer;';
+    btn.textContent=title;
+    btn.onclick=()=>{document.getElementById(id).style.display='flex';btn.remove();};
+    tb.appendChild(btn);
+  }
+}
+
+function remove30Tb(id){
+  const tb=document.getElementById('tbr-'+id);
+  if(tb)tb.remove();
+}
+
+function lock30(){
+  document.getElementById('desktop30').style.display='none';
+  document.getElementById('login30').style.display='flex';
+  document.getElementById('pin30').value='';
+  document.getElementById('startMenu30').style.display='none';
+}
+
+function exit30(){
+  // Return to 2.1 desktop
+  document.getElementById('os30').style.display='none';
+  document.getElementById('desktop').style.display='block';
+  document.getElementById('taskbar').classList.add('visible');
+  notify('◈ AeroWaterOS 2.1','Returned to AeroWaterOS 2.1');
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#startMenu30')&&!e.target.closest('#start30btn')){
+    start30Open=false;
+    const sm30=document.getElementById('startMenu30');
+    if(sm30)sm30.style.display='none';
+  }
+});
+
+/* ══════════════════════════════════════════
+   AUTO-BOOT FROM SAVED ACCOUNT
+══════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', ()=>{
+  const accounts=JSON.parse(localStorage.getItem('awos_accounts')||'[]');
+  if(accounts.length > 0){
+    // Use the most recently saved account
+    const acct=accounts[accounts.length-1];
+    window._osUser=acct.user;
+    window._osEmail=acct.email;
+    window._osDevice=acct.device;
+    window._osPin=acct.pin;
+    window._osLang=acct.lang||'en';
+    // Apply data silently
+    CORRECT_PIN=acct.pin;
+    userName=acct.user;
+    deviceName=acct.device;
+    applyLanguage(acct.lang||'en');
+    document.getElementById('smUsername').textContent=acct.user;
+    document.getElementById('smAvatar').textContent=acct.user[0].toUpperCase();
+    document.getElementById('lockUsername').textContent=acct.user;
+    const tp=document.getElementById('termPrompt');
+    if(tp)tp.textContent=acct.user+'@'+acct.device+':~$';
+    // Hide setup, show boot directly
+    document.getElementById('setupApp').style.display='none';
+    document.getElementById('boot').style.display='flex';
+    document.getElementById('boot').classList.remove('hidden');
+    setTimeout(()=>{
+      document.getElementById('boot').classList.add('hidden');
+      document.getElementById('boot').style.display='none';
+      showEOLNotice();
+    },4200);
+  }
+});
 let CORRECT_PIN = '1234';
 let userName    = 'aquauser';
 let deviceName  = 'AquaPC-1';
@@ -1380,16 +1969,31 @@ const filesData={
   music:[{icon:'🎵',name:'track01.mp3'},{icon:'🎵',name:'track02.mp3'},{icon:'🎵',name:'playlist.m3u'}],
   videos:[{icon:'🎬',name:'movie.mp4'},{icon:'📹',name:'clip.avi'}],
   c:[{icon:'📁',name:'AeroWaterOS'},{icon:'📁',name:'Program Files'},{icon:'📁',name:'Users'},{icon:'📁',name:'Windows'}],
-  d:[{icon:'☁️',name:'AquaCloud'},{icon:'📁',name:'Backups'}]
+  d:[{icon:'☁️',name:'AquaCloud'},{icon:'📁',name:'Backups'}],
+  os:[
+    {icon:'◈',  name:'AeroWaterOS 2.1',  _action:'current'},
+    {icon:'🆕', name:'AeroWaterOS 3.0',  _action:'launch30'},
+  ]
 };
 
 function showFiles(key,el){
   const data=filesData[key]||[];
-  const titles={home:'Home',desktop:'Desktop',docs:'Documents',pics:'Pictures',music:'Music',videos:'Videos',c:'AquaDrive (C:)',d:'Cloud (D:)'};
+  const titles={home:'Home',desktop:'Desktop',docs:'Documents',pics:'Pictures',music:'Music',videos:'Videos',c:'AquaDrive (C:)',d:'Cloud (D:)',os:'Operating System'};
   document.getElementById('filesTitle').textContent='Files — '+(titles[key]||key);
-  document.getElementById('filesGrid').innerHTML=data.map(f=>`<div class="file-item" ondblclick="fileOpen('${f.name}','${f.icon}')"><div class="file-icon">${f.icon}</div><div class="file-name">${f.name}</div></div>`).join('');
+  document.getElementById('filesGrid').innerHTML=data.map(f=>{
+    const dbl = f._action ? `fileAction('${f._action}')` : `fileOpen('${f.name}','${f.icon}')`;
+    return `<div class="file-item" ondblclick="${dbl}">
+      <div class="file-icon">${f.icon}</div>
+      <div class="file-name">${f.name}</div>
+    </div>`;
+  }).join('');
   document.querySelectorAll('#win-files .sidebar-item').forEach(s=>s.classList.remove('active'));
   if(el)el.classList.add('active');
+}
+
+function fileAction(action){
+  if(action==='launch30') launchV30();
+  else if(action==='current') notify('◈ AeroWaterOS 2.1','You are currently running AeroWaterOS 2.1');
 }
 function fileOpen(name,icon){const ext=name.split('.').pop().toLowerCase();if(['txt','docx','xlsx'].includes(ext)){openWindow('win-notepad');document.getElementById('notepadTitle').textContent=name+' — Notepad';document.getElementById('notepadArea').value='[Opening '+name+']\n\nThis file is stored in AquaDrive.\nDouble-click to edit.';}else if(['mp3','m3u'].includes(ext)){openWindow('win-player');}else{notify(icon+' '+name,'Opening '+name+'...');}}
 
