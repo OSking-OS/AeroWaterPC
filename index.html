@@ -381,7 +381,7 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
     <div class="s-page active" id="sp0">
       <span class="s-icon">◈</span>
       <div class="s-title">Welcome to AeroWaterOS</div>
-      <div class="s-sub">Install <strong style="color:var(--accent)">AeroWaterOS 2.2.0</strong> or sign in to your existing AquaSpace account.</div>
+      <div class="s-sub">Install <strong style="color:var(--accent)">AeroWaterOS 2.1</strong> or sign in to your existing AquaSpace account.</div>
       <div style="display:flex;gap:12px;margin-bottom:24px;">
         <div style="flex:1;padding:14px 16px;background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.12);border-radius:12px;"><div style="font-size:18px;margin-bottom:4px;">⚡</div><div style="font-size:12px;font-weight:500;">Fast Setup</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Under 2 minutes</div></div>
         <div style="flex:1;padding:14px 16px;background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.12);border-radius:12px;"><div style="font-size:18px;margin-bottom:4px;">🛡️</div><div style="font-size:12px;font-weight:500;">Secure</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">AquaShield protected</div></div>
@@ -412,13 +412,13 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
       <div class="s-sub">Read and accept the AquaSpace EULA to continue.</div>
       <div class="s-license">
         <strong>AQUASPACE CORPORATION — END USER LICENSE AGREEMENT</strong><br><br>
-        This Agreement is between you ("User") and AquaSpace Corporation ("AquaSpace") for AeroWaterOS 2.2.0 ("Software").<br><br>
+        This Agreement is between you ("User") and AquaSpace Corporation ("AquaSpace") for AeroWaterOS 2.1 ("Software").<br><br>
         <strong>1. GRANT OF LICENSE</strong><br>AquaSpace grants you a non-exclusive, non-transferable license to install and use this Software on a single device for personal, non-commercial purposes.<br><br>
         <strong>2. RESTRICTIONS</strong><br>You may not copy, modify, distribute, reverse engineer, sublicense, sell, or use the Software for any unlawful purpose.<br><br>
         <strong>3. INTELLECTUAL PROPERTY</strong><br>The Software and all copies remain the property of AquaSpace. All rights not granted are reserved.<br><br>
         <strong>4. DISCLAIMER</strong><br>THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. AQUASPACE DISCLAIMS ALL WARRANTIES INCLUDING MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.<br><br>
         <strong>5. AQUACLOUD</strong><br>Optional cloud services subject to separate privacy terms at aquaspace.corp/privacy.<br><br>
-        © 2024–2025 AquaSpace Corporation. All rights reserved.
+        © 2026 AquaSpace Corporation. All rights reserved.
       </div>
       <label class="s-check-row"><input type="checkbox" id="sLicenseChk" onchange="sCheckLicense()"> I have read and agree to the AquaSpace End User License Agreement</label>
       <div class="s-btn-row">
@@ -494,11 +494,11 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
     <div class="s-page" id="sp4">
       <div class="s-done-circle">✓</div>
       <div class="s-title" style="text-align:center;">Installation Complete!</div>
-      <div class="s-sub" style="text-align:center;">AeroWaterOS 2.2.0 has been installed.<br>Welcome, <strong id="sDoneUser" style="color:var(--accent)">aquauser</strong>! Your device is ready.</div>
+      <div class="s-sub" style="text-align:center;">AeroWaterOS 2.1 has been installed.<br>Welcome, <strong id="sDoneUser" style="color:var(--accent)">aquauser</strong>! Your device is ready.</div>
       <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.12);border-radius:14px;padding:16px 20px;margin-bottom:28px;">
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;">Summary</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
-          <div style="color:var(--text-dim);">OS</div><div style="color:var(--accent);">AeroWaterOS 2.2.0</div>
+          <div style="color:var(--text-dim);">OS</div><div style="color:var(--accent);">AeroWaterOS 2.1</div>
           <div style="color:var(--text-dim);">Username</div><div id="sSumUser">—</div>
           <div style="color:var(--text-dim);">Device</div><div id="sSumDevice">—</div>
           <div style="color:var(--text-dim);">Email</div><div id="sSumEmail" style="font-size:12px;">—</div>
@@ -659,7 +659,7 @@ input[type=password]::-webkit-credentials-auto-fill-button { display:none !impor
     </div>
     <div class="win-body">
       <div class="terminal-body" id="terminalBody" onclick="document.getElementById('termInput').focus()">
-        <div class="terminal-line"><span style="color:var(--accent)">AeroWaterOS</span><span style="color:var(--text-dim)"> v2.2.0 — AquaSpace Corporation</span></div>
+        <div class="terminal-line"><span style="color:var(--accent)">AeroWaterOS</span><span style="color:var(--text-dim)"> v2.1 — AquaSpace Corporation</span></div>
         <div class="terminal-line" style="margin-bottom:10px;"><span style="color:var(--text-dim)">Type 'help' for commands.</span></div>
         <div id="termLines"></div>
         <div class="terminal-line" id="termInputLine">
@@ -908,7 +908,210 @@ function signInExisting(){
   window._osEmail=acct.email;
   window._osDevice=acct.device;
   window._osPin=acct.pin;
+  window._osLang=acct.lang||'en';
   sLaunchOS();
+}
+
+const translations = {
+  en: {
+    lockHint:'Click to unlock', smSearch:'Search apps, files, settings...',
+    smSection:'Pinned', smAccount:'AquaSpace Account',
+    appEdge:'Edge', appFiles:'Files', appSettings:'Settings',
+    appNotepad:'Notepad', appPlayer:'AquaPlayer', appTerminal:'Terminal',
+    tbSearch:'Search apps, files...', bootSub:'by AquaSpace Corporation',
+    lockTime:'Click to unlock', ntTitle:'AeroWater Edge',
+    ntSearch:'Search the web...', filesHome:'Home', filesDesktop:'Desktop',
+    filesDocs:'Documents', filesPics:'Pictures', filesMusic:'Music',
+    filesVideos:'Videos', filesDrives:'Drives', settingsTitle:'Settings',
+    settingsSystem:'System', settingsNetwork:'Network', settingsDisplay:'Display',
+    settingsPrivacy:'Privacy', settingsUpdates:'Updates', settingsAbout:'About',
+  },
+  it: {
+    lockHint:'Clicca per sbloccare', smSearch:'Cerca app, file, impostazioni...',
+    smSection:'Bloccate', smAccount:'Account AquaSpace',
+    appEdge:'Edge', appFiles:'File', appSettings:'Impostazioni',
+    appNotepad:'Blocco Note', appPlayer:'AquaPlayer', appTerminal:'Terminale',
+    tbSearch:'Cerca app, file...', bootSub:'da AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'Cerca nel web...',
+    filesHome:'Home', filesDesktop:'Desktop', filesDocs:'Documenti',
+    filesPics:'Immagini', filesMusic:'Musica', filesVideos:'Video',
+    filesDrives:'Unità', settingsTitle:'Impostazioni',
+    settingsSystem:'Sistema', settingsNetwork:'Rete', settingsDisplay:'Schermo',
+    settingsPrivacy:'Privacy', settingsUpdates:'Aggiornamenti', settingsAbout:'Informazioni',
+  },
+  es: {
+    lockHint:'Haz clic para desbloquear', smSearch:'Buscar apps, archivos...',
+    smSection:'Anclado', smAccount:'Cuenta AquaSpace',
+    appEdge:'Edge', appFiles:'Archivos', appSettings:'Configuración',
+    appNotepad:'Bloc de Notas', appPlayer:'AquaPlayer', appTerminal:'Terminal',
+    tbSearch:'Buscar apps, archivos...', bootSub:'por AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'Buscar en la web...',
+    filesHome:'Inicio', filesDesktop:'Escritorio', filesDocs:'Documentos',
+    filesPics:'Imágenes', filesMusic:'Música', filesVideos:'Videos',
+    filesDrives:'Unidades', settingsTitle:'Configuración',
+    settingsSystem:'Sistema', settingsNetwork:'Red', settingsDisplay:'Pantalla',
+    settingsPrivacy:'Privacidad', settingsUpdates:'Actualizaciones', settingsAbout:'Acerca de',
+  },
+  fr: {
+    lockHint:'Cliquez pour déverrouiller', smSearch:'Rechercher apps, fichiers...',
+    smSection:'Épinglé', smAccount:'Compte AquaSpace',
+    appEdge:'Edge', appFiles:'Fichiers', appSettings:'Paramètres',
+    appNotepad:'Bloc-notes', appPlayer:'AquaPlayer', appTerminal:'Terminal',
+    tbSearch:'Rechercher apps, fichiers...', bootSub:'par AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'Rechercher sur le web...',
+    filesHome:'Accueil', filesDesktop:'Bureau', filesDocs:'Documents',
+    filesPics:'Images', filesMusic:'Musique', filesVideos:'Vidéos',
+    filesDrives:'Lecteurs', settingsTitle:'Paramètres',
+    settingsSystem:'Système', settingsNetwork:'Réseau', settingsDisplay:'Affichage',
+    settingsPrivacy:'Confidentialité', settingsUpdates:'Mises à jour', settingsAbout:'À propos',
+  },
+  de: {
+    lockHint:'Zum Entsperren klicken', smSearch:'Apps, Dateien suchen...',
+    smSection:'Angeheftet', smAccount:'AquaSpace-Konto',
+    appEdge:'Edge', appFiles:'Dateien', appSettings:'Einstellungen',
+    appNotepad:'Editor', appPlayer:'AquaPlayer', appTerminal:'Terminal',
+    tbSearch:'Apps, Dateien suchen...', bootSub:'von AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'Im Web suchen...',
+    filesHome:'Startseite', filesDesktop:'Desktop', filesDocs:'Dokumente',
+    filesPics:'Bilder', filesMusic:'Musik', filesVideos:'Videos',
+    filesDrives:'Laufwerke', settingsTitle:'Einstellungen',
+    settingsSystem:'System', settingsNetwork:'Netzwerk', settingsDisplay:'Anzeige',
+    settingsPrivacy:'Datenschutz', settingsUpdates:'Updates', settingsAbout:'Info',
+  },
+  pt: {
+    lockHint:'Clique para desbloquear', smSearch:'Pesquisar apps, arquivos...',
+    smSection:'Fixado', smAccount:'Conta AquaSpace',
+    appEdge:'Edge', appFiles:'Arquivos', appSettings:'Configurações',
+    appNotepad:'Bloco de Notas', appPlayer:'AquaPlayer', appTerminal:'Terminal',
+    tbSearch:'Pesquisar apps, arquivos...', bootSub:'por AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'Pesquisar na web...',
+    filesHome:'Início', filesDesktop:'Área de Trabalho', filesDocs:'Documentos',
+    filesPics:'Imagens', filesMusic:'Música', filesVideos:'Vídeos',
+    filesDrives:'Unidades', settingsTitle:'Configurações',
+    settingsSystem:'Sistema', settingsNetwork:'Rede', settingsDisplay:'Tela',
+    settingsPrivacy:'Privacidade', settingsUpdates:'Atualizações', settingsAbout:'Sobre',
+  },
+  ja: {
+    lockHint:'クリックしてロック解除', smSearch:'アプリ、ファイルを検索...',
+    smSection:'ピン留め', smAccount:'AquaSpaceアカウント',
+    appEdge:'Edge', appFiles:'ファイル', appSettings:'設定',
+    appNotepad:'メモ帳', appPlayer:'AquaPlayer', appTerminal:'ターミナル',
+    tbSearch:'アプリ、ファイルを検索...', bootSub:'AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'ウェブを検索...',
+    filesHome:'ホーム', filesDesktop:'デスクトップ', filesDocs:'ドキュメント',
+    filesPics:'画像', filesMusic:'音楽', filesVideos:'動画',
+    filesDrives:'ドライブ', settingsTitle:'設定',
+    settingsSystem:'システム', settingsNetwork:'ネットワーク', settingsDisplay:'ディスプレイ',
+    settingsPrivacy:'プライバシー', settingsUpdates:'更新', settingsAbout:'情報',
+  },
+  zh: {
+    lockHint:'点击解锁', smSearch:'搜索应用、文件...',
+    smSection:'已固定', smAccount:'AquaSpace账户',
+    appEdge:'Edge', appFiles:'文件', appSettings:'设置',
+    appNotepad:'记事本', appPlayer:'AquaPlayer', appTerminal:'终端',
+    tbSearch:'搜索应用、文件...', bootSub:'AquaSpace公司',
+    ntTitle:'AeroWater Edge', ntSearch:'搜索网页...',
+    filesHome:'主页', filesDesktop:'桌面', filesDocs:'文档',
+    filesPics:'图片', filesMusic:'音乐', filesVideos:'视频',
+    filesDrives:'驱动器', settingsTitle:'设置',
+    settingsSystem:'系统', settingsNetwork:'网络', settingsDisplay:'显示',
+    settingsPrivacy:'隐私', settingsUpdates:'更新', settingsAbout:'关于',
+  },
+  ar: {
+    lockHint:'انقر للفتح', smSearch:'ابحث عن التطبيقات والملفات...',
+    smSection:'مثبّت', smAccount:'حساب AquaSpace',
+    appEdge:'Edge', appFiles:'الملفات', appSettings:'الإعدادات',
+    appNotepad:'المفكرة', appPlayer:'AquaPlayer', appTerminal:'الطرفية',
+    tbSearch:'البحث...', bootSub:'بواسطة AquaSpace',
+    ntTitle:'AeroWater Edge', ntSearch:'ابحث في الويب...',
+    filesHome:'الرئيسية', filesDesktop:'سطح المكتب', filesDocs:'المستندات',
+    filesPics:'الصور', filesMusic:'الموسيقى', filesVideos:'الفيديو',
+    filesDrives:'الأقراص', settingsTitle:'الإعدادات',
+    settingsSystem:'النظام', settingsNetwork:'الشبكة', settingsDisplay:'الشاشة',
+    settingsPrivacy:'الخصوصية', settingsUpdates:'التحديثات', settingsAbout:'حول',
+  },
+  ko: {
+    lockHint:'클릭하여 잠금 해제', smSearch:'앱, 파일 검색...',
+    smSection:'고정됨', smAccount:'AquaSpace 계정',
+    appEdge:'Edge', appFiles:'파일', appSettings:'설정',
+    appNotepad:'메모장', appPlayer:'AquaPlayer', appTerminal:'터미널',
+    tbSearch:'앱, 파일 검색...', bootSub:'AquaSpace Corporation',
+    ntTitle:'AeroWater Edge', ntSearch:'웹 검색...',
+    filesHome:'홈', filesDesktop:'바탕화면', filesDocs:'문서',
+    filesPics:'사진', filesMusic:'음악', filesVideos:'동영상',
+    filesDrives:'드라이브', settingsTitle:'설정',
+    settingsSystem:'시스템', settingsNetwork:'네트워크', settingsDisplay:'디스플레이',
+    settingsPrivacy:'개인 정보', settingsUpdates:'업데이트', settingsAbout:'정보',
+  },
+};
+
+function applyLanguage(lang){
+  const t = translations[lang] || translations['en'];
+  // Lock screen
+  const lh=document.getElementById('lockHint'); if(lh)lh.textContent=t.lockHint;
+  // Boot subtitle
+  const bs=document.querySelector('.boot-sub'); if(bs)bs.textContent=t.bootSub;
+  // Start menu search
+  const ss=document.querySelector('.sm-search'); if(ss)ss.placeholder='🔍  '+t.smSearch;
+  // Start menu section title
+  const st=document.querySelector('.sm-section-title'); if(st)st.textContent=t.smSection;
+  // Start menu account
+  const sa=document.querySelector('#startMenu .sm-username+div'); if(sa)sa.textContent=t.smAccount;
+  // Start menu app names
+  const appNames=document.querySelectorAll('.sm-app-name');
+  const nameMap=[t.appEdge,t.appFiles,t.appSettings,t.appNotepad,t.appPlayer,t.appTerminal];
+  appNames.forEach((el,i)=>{ if(nameMap[i])el.textContent=nameMap[i]; });
+  // Taskbar search
+  const tbsi=document.getElementById('tbSearchInput'); if(tbsi)tbsi.placeholder=t.tbSearch;
+  // Browser new tab title
+  const ntt=document.getElementById('browser-newtab')?.querySelector('.browser-nt-title'); if(ntt)ntt.textContent=t.ntTitle;
+  // Browser new tab search
+  const nts=document.querySelector('.browser-nt-search'); if(nts)nts.placeholder=t.ntSearch;
+  // Window titles
+  const wmap={'win-browser':t.appEdge,'win-files':t.appFiles,'win-settings':t.appSettings,
+    'win-notepad':t.appNotepad,'win-player':t.appPlayer,'win-terminal':t.appTerminal};
+  Object.entries(wmap).forEach(([id,name])=>{
+    const w=document.getElementById(id);
+    if(w){ const tt=w.querySelector('.win-title'); if(tt)tt.textContent=name; }
+  });
+  // Files sidebar
+  const sidebarMap=[t.filesHome,t.filesDesktop,t.filesDocs,t.filesPics,t.filesMusic,t.filesVideos];
+  document.querySelectorAll('#win-files .sidebar-item').forEach((el,i)=>{
+    if(sidebarMap[i]){
+      const ico=el.querySelector('.sidebar-icon');
+      el.textContent=''; if(ico)el.appendChild(ico);
+      el.appendChild(document.createTextNode(sidebarMap[i]));
+    }
+  });
+  const sidebarHeaders=document.querySelectorAll('#win-files .sidebar-header');
+  if(sidebarHeaders[0])sidebarHeaders[0].textContent=lang==='en'?'Quick Access':t.filesHome;
+  if(sidebarHeaders[1])sidebarHeaders[1].textContent=t.filesDrives;
+  // Settings sidebar
+  const setItems=document.querySelectorAll('#win-settings .sidebar-item');
+  const setNames=[t.settingsSystem,t.settingsNetwork,t.settingsDisplay,t.settingsPrivacy,t.settingsUpdates,t.settingsAbout];
+  setItems.forEach((el,i)=>{
+    if(setNames[i]){
+      const ico=el.querySelector('.sidebar-icon');
+      el.textContent=''; if(ico)el.appendChild(ico);
+      el.appendChild(document.createTextNode(setNames[i]));
+    }
+  });
+  const setHeader=document.querySelector('#win-settings .sidebar-header');
+  if(setHeader)setHeader.textContent=t.settingsTitle;
+  // Desktop icon names
+  const deskIcons=document.querySelectorAll('.desktop-icon-name');
+  const deskMap=[t.appEdge,t.appFiles,t.appTerminal,t.appSettings];
+  deskIcons.forEach((el,i)=>{ if(deskMap[i])el.textContent=deskMap[i]; });
+  // RTL for Arabic
+  document.documentElement.dir = lang==='ar'?'rtl':'ltr';
+  document.documentElement.lang = lang;
+  // Update winMeta labels for taskbar icons
+  winMeta['win-browser'].label=t.appEdge;
+  winMeta['win-files'].label=t.appFiles;
+  winMeta['win-settings'].label=t.appSettings;
+  winMeta['win-notepad'].label=t.appNotepad;
+  winMeta['win-player'].label=t.appPlayer;
+  winMeta['win-terminal'].label=t.appTerminal;
 }
 
 function sLaunchOS(){
@@ -917,6 +1120,8 @@ function sLaunchOS(){
   CORRECT_PIN = window._osPin || '1234';
   userName    = window._osUser || 'aquauser';
   deviceName  = window._osDevice || 'AquaPC-1';
+  // Apply language
+  applyLanguage(window._osLang || 'en');
   // Update OS UI
   document.getElementById('smUsername').textContent = userName;
   document.getElementById('smAvatar').textContent = userName[0].toUpperCase();
@@ -1047,8 +1252,45 @@ function openWindow(id){
   if(id==='win-terminal')document.getElementById('termInput').focus();
   if(id==='win-player')playerLoad(playerIdx);
 }
-function closeWin(id){document.getElementById(id).style.display='none';}
-function minimizeWin(id){document.getElementById(id).style.display='none';}
+function closeWin(id){
+  document.getElementById(id).style.display='none';
+  const tb=document.getElementById('tb-'+id);
+  if(tb)tb.remove();
+}
+const winMeta = {
+  'win-browser':  { icon:'🌊', label:'AeroWater Edge' },
+  'win-files':    { icon:'📁', label:'Files' },
+  'win-settings': { icon:'⚙️', label:'Settings' },
+  'win-terminal': { icon:'⌂', label:'Terminal' },
+  'win-notepad':  { icon:'📝', label:'Notepad' },
+  'win-player':   { icon:'🎵', label:'AquaPlayer' },
+};
+
+function minimizeWin(id){
+  document.getElementById(id).style.display='none';
+  // Add taskbar icon if not already there
+  const running=document.getElementById('tbRunning');
+  if(running && !document.getElementById('tb-'+id)){
+    const meta=winMeta[id]||{icon:'🪟',label:id};
+    const btn=document.createElement('button');
+    btn.id='tb-'+id;
+    btn.title=meta.label;
+    btn.style.cssText='background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:8px;padding:4px 10px;color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;margin-left:4px;transition:background .15s;white-space:nowrap;max-width:130px;';
+    btn.innerHTML=`<span>${meta.icon}</span><span style="font-size:11px;overflow:hidden;text-overflow:ellipsis;">${meta.label}</span>`;
+    btn.onmouseover=()=>btn.style.background='rgba(0,200,255,0.15)';
+    btn.onmouseout=()=>btn.style.background='rgba(255,255,255,0.08)';
+    btn.onclick=()=>restoreWin(id);
+    running.appendChild(btn);
+  }
+}
+
+function restoreWin(id){
+  document.getElementById(id).style.display='flex';
+  focusWin(id);
+  // Remove taskbar icon
+  const tb=document.getElementById('tb-'+id);
+  if(tb)tb.remove();
+}
 function focusWin(id){document.querySelectorAll('.win').forEach(w=>w.classList.remove('focused'));document.getElementById(id).classList.add('focused');winZBase++;document.getElementById(id).style.zIndex=winZBase;}
 function toggleMax(id){
   const win=document.getElementById(id);
@@ -1166,8 +1408,8 @@ const settingsPages={
   network:()=>`<div class="settings-section-title">Network & Internet</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">📶</div><div class="settings-row-text"><div class="settings-row-label">Wi-Fi</div><div class="settings-row-sub">${settingsState.wifi?'AquaSpace_5G — Connected':'Disconnected'}</div></div><button class="toggle ${settingsState.wifi?'on':''}" onclick="settingToggle('wifi',this)"></button></div><div class="settings-row"><div class="settings-row-icon">☁️</div><div class="settings-row-text"><div class="settings-row-label">AquaCloud sync</div><div class="settings-row-sub">Files synced to cloud</div></div><button class="toggle ${settingsState.aquacloud?'on':''}" onclick="settingToggle('aquacloud',this)"></button></div><div class="settings-row"><div class="settings-row-icon">🌐</div><div class="settings-row-text"><div class="settings-row-label">IP Address</div></div><span class="settings-row-value">${settingsState.wifi?'192.168.1.42':'Not assigned'}</span></div></div>`,
   display:()=>`<div class="settings-section-title">Display</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">🖥️</div><div class="settings-row-text"><div class="settings-row-label">Resolution</div><div class="settings-row-sub">Recommended</div></div><span class="settings-row-value">1920×1080</span></div><div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:10px;"><div style="display:flex;align-items:center;gap:10px;width:100%;"><div class="settings-row-icon">🔆</div><div class="settings-row-text"><div class="settings-row-label">Brightness</div><div class="settings-row-sub">Adjust wallpaper brightness</div></div><span class="settings-row-value" id="brightnessVal">${settingsState.brightness}%</span></div><input type="range" min="10" max="100" value="${settingsState.brightness}" style="width:100%;accent-color:var(--accent);" oninput="settingBrightness(this.value)"></div></div>`,
   privacy:()=>`<div class="settings-section-title">Privacy & Security</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">🔒</div><div class="settings-row-text"><div class="settings-row-label">AquaShield</div><div class="settings-row-sub">Real-time threat protection — ${settingsState.aquashield?'Active':'Disabled'}</div></div><button class="toggle ${settingsState.aquashield?'on':''}" onclick="settingToggle('aquashield',this)"></button></div><div class="settings-row"><div class="settings-row-icon">📍</div><div class="settings-row-text"><div class="settings-row-label">Location services</div><div class="settings-row-sub">Allow apps to use your location</div></div><button class="toggle ${settingsState.location?'on':''}" onclick="settingToggle('location',this)"></button></div><div class="settings-row"><div class="settings-row-icon">🛡️</div><div class="settings-row-text"><div class="settings-row-label">Change PIN</div><div class="settings-row-sub">Update your lock screen PIN</div></div><button onclick="changePin()" style="background:rgba(0,200,255,0.15);border:1px solid var(--glass-border);border-radius:8px;padding:5px 14px;color:var(--accent);font-family:var(--font);font-size:12px;cursor:pointer;">Change</button></div><div class="settings-row"><div class="settings-row-icon">🚪</div><div class="settings-row-text"><div class="settings-row-label">Log Out</div><div class="settings-row-sub">Sign out and return to the installer</div></div><button onclick="logOut()" style="background:rgba(255,60,60,0.12);border:1px solid rgba(255,60,60,0.25);border-radius:8px;padding:5px 14px;color:#ff6060;font-family:var(--font);font-size:12px;cursor:pointer;">Log Out</button></div></div>`,
-  update:()=>`<div class="settings-section-title">Updates</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">✅</div><div class="settings-row-text"><div class="settings-row-label">AeroWaterOS is up to date</div><div class="settings-row-sub">Version 2.2.0 — Last checked today</div></div><span class="settings-row-value">v2.2.0</span></div><div class="settings-row"><div class="settings-row-icon">🔄</div><div class="settings-row-text"><div class="settings-row-label">Check for updates</div></div><button onclick="checkUpdates()" style="background:rgba(0,200,255,0.15);border:1px solid var(--glass-border);border-radius:8px;padding:5px 14px;color:var(--accent);font-family:var(--font);font-size:12px;cursor:pointer;">Check now</button></div></div>`,
-  about:()=>`<div class="settings-section-title">About AeroWaterOS</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">◈</div><div class="settings-row-text"><div class="settings-row-label">Operating System</div></div><span class="settings-row-value">AeroWaterOS 2.2.0</span></div><div class="settings-row"><div class="settings-row-icon">🏢</div><div class="settings-row-text"><div class="settings-row-label">Developer</div></div><span class="settings-row-value">AquaSpace Corp.</span></div><div class="settings-row"><div class="settings-row-icon">💻</div><div class="settings-row-text"><div class="settings-row-label">Device</div></div><span class="settings-row-value">${deviceName}</span></div><div class="settings-row"><div class="settings-row-icon">👤</div><div class="settings-row-text"><div class="settings-row-label">User</div></div><span class="settings-row-value">${userName}</span></div><div class="settings-row"><div class="settings-row-icon">🔧</div><div class="settings-row-text"><div class="settings-row-label">Build</div></div><span class="settings-row-value">AQS-22000-RELEASE</span></div></div>`
+  update:()=>`<div class="settings-section-title">Updates</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">✅</div><div class="settings-row-text"><div class="settings-row-label">AeroWaterOS is up to date</div><div class="settings-row-sub">Version 2.1 — Last checked today</div></div><span class="settings-row-value">v2.1</span></div><div class="settings-row"><div class="settings-row-icon">🔄</div><div class="settings-row-text"><div class="settings-row-label">Check for updates</div></div><button onclick="checkUpdates()" style="background:rgba(0,200,255,0.15);border:1px solid var(--glass-border);border-radius:8px;padding:5px 14px;color:var(--accent);font-family:var(--font);font-size:12px;cursor:pointer;">Check now</button></div></div>`,
+  about:()=>`<div class="settings-section-title">About AeroWaterOS</div><div class="settings-card"><div class="settings-row"><div class="settings-row-icon">◈</div><div class="settings-row-text"><div class="settings-row-label">Operating System</div></div><span class="settings-row-value">AeroWaterOS 2.1</span></div><div class="settings-row"><div class="settings-row-icon">🏢</div><div class="settings-row-text"><div class="settings-row-label">Developer</div></div><span class="settings-row-value">AquaSpace Corp.</span></div><div class="settings-row"><div class="settings-row-icon">💻</div><div class="settings-row-text"><div class="settings-row-label">Device</div></div><span class="settings-row-value">${deviceName}</span></div><div class="settings-row"><div class="settings-row-icon">👤</div><div class="settings-row-text"><div class="settings-row-label">User</div></div><span class="settings-row-value">${userName}</span></div><div class="settings-row"><div class="settings-row-icon">🔧</div><div class="settings-row-text"><div class="settings-row-label">Build</div></div><span class="settings-row-value">AQS-21000-RELEASE</span></div></div>`
 };
 function showSettings(key,el){
   const p=settingsPages[key];
@@ -1210,7 +1452,7 @@ function confirmPinChange(){
   document.querySelector('div[style*="fixed"][style*="9999"]').remove();
   notify('🛡️ Security','PIN changed successfully');
 }
-function checkUpdates(){notify('🔄 Updates','Checking AquaSpace servers...');setTimeout(()=>notify('✅ Updates','AeroWaterOS is up to date — v2.2.0'),2500);}
+function checkUpdates(){notify('🔄 Updates','Checking AquaSpace servers...');setTimeout(()=>notify('✅ Updates','AeroWaterOS is up to date — v2.1'),2500);}
 
 function logOut(){
   // Confirm first
@@ -1270,12 +1512,12 @@ function confirmLogOut(){
 const termHistory=[];let histIdx=-1;
 const termCommands={
   help:()=>['┌───────────────────────────────────┐','│  AquaSpace Terminal — Commands    │','└───────────────────────────────────┘','  ver, uptime, whoami, hostname, sysinfo','  neofetch, cls, clear, color','  ls, dir, pwd, mkdir, touch, cat, tree','  ping, ipconfig, netstat, tracert','  ps, tasklist, kill','  date, time, echo, calc, weather, matrix','  aqua, aquadrive, banner, coin','  reboot, lock, shutdown'],
-  ver:()=>['AeroWaterOS 2.2.0 — AquaSpace Corporation — AQS-22000'],
+  ver:()=>['AeroWaterOS 2.1 — AquaSpace Corporation — AQS-21000'],
   uptime:()=>{const m=Math.floor(Math.random()*200+10);return[`Uptime: ${m} min (${Math.floor(m/60)}h ${m%60}m) | Load: ${(Math.random()*.6+.1).toFixed(2)}`];},
   whoami:()=>[userName+' (Administrator)'],
   hostname:()=>[deviceName],
-  sysinfo:()=>[`OS: AeroWaterOS 2.2.0`,`Device: ${deviceName}`,`User: ${userName}`,`CPU: AquaCore X9 @ 3.80GHz`,`RAM: 16 GB`,`Disk: 256 GB SSD`,`GPU: AquaVision RTX 4070`],
-  neofetch:()=>[`   ◈◈◈◈◈◈◈    ${userName}@${deviceName}`,'  ◈  ·····  ◈  ─────────────────────',' ◈  ◈◈◈◈◈  ◈   OS:   AeroWaterOS 2.2.0',' ◈  ◈   ◈  ◈   CPU:  AquaCore X9 @ 3.80GHz',' ◈  ◈◈◈◈◈  ◈   RAM:  16 GB','  ◈  ·····  ◈  GPU:  AquaVision RTX 4070','   ◈◈◈◈◈◈◈    Shell: AquaShell 1.4'],
+  sysinfo:()=>[`OS: AeroWaterOS 2.1`,`Device: ${deviceName}`,`User: ${userName}`,`CPU: AquaCore X9 @ 3.80GHz`,`RAM: 16 GB`,`Disk: 256 GB SSD`,`GPU: AquaVision RTX 4070`],
+  neofetch:()=>[`   ◈◈◈◈◈◈◈    ${userName}@${deviceName}`,'  ◈  ·····  ◈  ─────────────────────',' ◈  ◈◈◈◈◈  ◈   OS:   AeroWaterOS 2.1',' ◈  ◈   ◈  ◈   CPU:  AquaCore X9 @ 3.80GHz',' ◈  ◈◈◈◈◈  ◈   RAM:  16 GB','  ◈  ·····  ◈  GPU:  AquaVision RTX 4070','   ◈◈◈◈◈◈◈    Shell: AquaShell 1.4'],
   cls:()=>{document.getElementById('termLines').innerHTML='';return[];},
   clear:()=>{document.getElementById('termLines').innerHTML='';return[];},
   color:(a)=>{const c={green:'#7dffb4',cyan:'#00d4ff',white:'#e8f4ff',yellow:'#ffd060',red:'#ff6060',blue:'#60aaff'};const col=c[a?.toLowerCase()];if(!col)return['Usage: color [green|cyan|white|yellow|red|blue]'];document.getElementById('terminalBody').style.color=col;return['Color set to '+a];},
@@ -1299,11 +1541,11 @@ const termCommands={
   calc:(a)=>{if(!a)return['Usage: calc <expr>  e.g. calc 2+2'];try{const r=Function('"use strict";return('+a.replace(/[^0-9+\-*/().% ]/g,'')+')()');return[a+' = '+r];}catch{return['Invalid expression.']}},
   weather:()=>[`☁ Weather: ${Math.floor(Math.random()*20+10)}°C — ${['Sunny','Cloudy','Clear'][Math.floor(Math.random()*3)]} — Humidity ${Math.floor(Math.random()*40+40)}%`],
   matrix:()=>{document.getElementById('terminalBody').style.color='#00ff41';const c='01アウエカサ◈';const l=[];for(let i=0;i<6;i++){let s='';for(let j=0;j<48;j++)s+=c[Math.floor(Math.random()*c.length)];l.push(s);}setTimeout(()=>{document.getElementById('terminalBody').style.color='#7dffb4';},2000);return l;},
-  aqua:()=>['   ~~~ AquaSpace Corporation ~~~','        ◈  AeroWaterOS 2.2','   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~','   Trusted. Secure. Connected.'],
+  aqua:()=>['   ~~~ AquaSpace Corporation ~~~','        ◈  AeroWaterOS 2.1','   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~','   Trusted. Secure. Connected.'],
   aquadrive:()=>['AquaDrive (C:)  ████████░░░░  256 GB  Used: 76 GB  Free: 180 GB','AquaCloud (D:)  ████░░░░░░░░  1 TB    Used: 120 GB Free: 880 GB'],
   banner:(a)=>{const t=(a||'AQUA').toUpperCase().slice(0,6);return[`  ╔${'═'.repeat(t.length*2+4)}╗`,`  ║  ${t.split('').join(' ')}  ║`,`  ╚${'═'.repeat(t.length*2+4)}╝`];},
   coin:()=>[Math.random()>.5?'🪙 HEADS':'🪙 TAILS'],
-  about:()=>['AeroWaterOS v2.2.0 — AquaSpace Corporation'],
+  about:()=>['AeroWaterOS v2.1 — AquaSpace Corporation'],
   shutdown:()=>{setTimeout(shutdownOS,500);return['Shutting down...'];},
   reboot:()=>{setTimeout(restartOS,500);return['Rebooting...'];},
   lock:()=>{setTimeout(lockScreen,500);return['Locking session...'];}
@@ -1557,8 +1799,5 @@ document.addEventListener('contextmenu',e=>{
 });
 function refreshDesktop(){document.getElementById('ctxMenu').style.display='none';notify('↻ Desktop','Desktop refreshed');}
 </script>
-
-
-</script>   
 </body>
 </html>
